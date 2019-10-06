@@ -9,8 +9,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextClock;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.tahususu.localattendance.R;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,8 +55,22 @@ public class AttendanceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_attendance, container, false);
+        final TextClock clock = root.findViewById(R.id.clock);
+        clock.setFormat12Hour(null);
+        clock.setFormat24Hour("HH:mm");
+
+        Button action = root.findViewById(R.id.btn_action);
+        action.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                Date date = new Date();
+                Snackbar.make(view, "Jam " + dateFormat.format(date), Snackbar.LENGTH_LONG).show();
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_attendance, container, false);
+        return root;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
